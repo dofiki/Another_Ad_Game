@@ -1,6 +1,6 @@
 import {Canvas} from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei';
-import Box from './components/box';
+import Player from './components/Player';
 import Ground from './components/Ground';
 
 function App() {
@@ -13,13 +13,10 @@ function App() {
         <GizmoHelper alignment='bottom-right' margin={[80, 80]}>
           <GizmoViewport />
         </GizmoHelper>
-        <gridHelper args={[80, 30, "red","gray"]} />
-        <axesHelper args={[5]} />
-
         <OrbitControls />
 
         {/*Scene*/}
-        <Box/>
+        <Player/>
         <Ground />
 
         {/*lights*/}
