@@ -1,7 +1,7 @@
 import { useLoader } from "@react-three/fiber"
 import * as THREE from "three"
-import Ammo from "./Ammo"
-import Enemy from "./Enemy";
+import HelpPanel from "./HelpPanel"
+import Enemy from "./EnemyPanel";
 
 function Ground() {
   const texture = useLoader(THREE.TextureLoader, '/textures/Road001_1K-JPG_Color.jpg')
@@ -13,7 +13,7 @@ function Ground() {
   return (
      <mesh rotation={[-Math.PI / 2, 0, 0] } position={[0,0,-100]}>
           <planeGeometry args={[40, 300]} />
-          <Ammo />
+          <HelpPanel />
           <Enemy />
           <meshStandardMaterial map={texture} />
      </mesh>

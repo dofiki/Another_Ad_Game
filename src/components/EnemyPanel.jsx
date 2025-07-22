@@ -2,11 +2,11 @@ import { useRef } from "react";
 import degToRad from "../utils/degToRad";
 import { useFrame } from "@react-three/fiber";
 
-function Enemy() {
-  const SPEED = 25;
+function EnemyPanel() {
+  const SPEED = 20 ;
   const enemeyRef = useRef();
 
-  useFrame((state,delta)=>{
+  useFrame((state, delta)=>{
     if(enemeyRef.current){
         enemeyRef.current.position.y -= delta * SPEED;
     }
@@ -17,7 +17,6 @@ function Enemy() {
   })
 
   return (
-
       <mesh
         ref={enemeyRef}
         position={[10, -10, 0]}
@@ -29,4 +28,4 @@ function Enemy() {
   )
 }
 
-export default Enemy
+export default EnemyPanel

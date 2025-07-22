@@ -7,7 +7,9 @@ function App() {
 
   return (
     <div id="canvas-container">
-      <Canvas camera={{ position: [0, 30, 40], fov: 50}}>
+      <Canvas camera={{ position: [0, 30, 40], fov: 50}} >
+        
+        <color attach="background" args={['black']} />
 
         {/*helpers*/}
         <GizmoHelper alignment='bottom-right' margin={[80, 80]}>

@@ -1,31 +1,28 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import usePlayerStore from '../store/playerStore'; 
+import Bullets from './Bullets';
 
 export default function Player(){
 
-  const [playerPosition,setPlayerPosition] = useState([0, 1, 20])
+  const playerPos = usePlayerStore((state)=>{ return state.playerPosition})
+  const setPlayerPos = usePlayerStore((state)=>{ return state.setPlayerPosition})
 
+  const [isShooting,setIsShooting] = useState(false)
+
+  // left to right movement
   useEffect(()=>{
 
     const handleKeyPress= (e)=>{
 
-    const [x,y,z] = playerPosition
+    const [x,y,z] = playerPos
       switch(e.key){
-      
-        case "w":
-          setPlayerPosition([x,y,z-1])
-          break
-
-        case "s":
-          setPlayerPosition([x,y,z+1])
-          break
 
         case "a":
-          setPlayerPosition([x-1,y,z])
+          setPlayerPos([x-1,y,z])
           break
 
         case "d":
-          setPlayerPosition([x+1,y,z])
+          setPlayerPos([x+1,y,z])
           break
       }
     }
@@ -36,12 +33,39 @@ export default function Player(){
       window.removeEventListener('keypress', handleKeyPress)
     }
 
-  },[playerPosition])
+  },[playerPos])
+
+  // mouse left click
+  useEffect(()=>{
+    function handleMouseDown(){
+      setIsShooting(true);
+      console.log("shooting")
+    }
+
+    function handleMouseUp(){
+      setIsShooting(false);
+      console.log("stoped")
+    }
+
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp)
+
+    return()=>{
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseDown);
+    }
+
+  },[playerPos])
 
   return(
-      <mesh position={playerPosition}>
+      <>
+      <mesh position={playerPos}>
         <boxGeometry args={[2, 2, 2]} />
-        <meshStandardMaterial color="deepskyblue" />
+        <meshStandardMaterial color="white" />
       </mesh>
+      {isShooting && (
+        <Bullets />
+      )}
+      </>
   )
 }
