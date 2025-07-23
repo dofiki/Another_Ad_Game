@@ -1,26 +1,35 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-import usePlayerStore from "../store/playerStore"
 
-function Bullets() {
-  const SPEED = 100;  
-  const playerPos = usePlayerStore((state)=>{return state.playerPosition})
-  
-  const [x,y,z] = playerPos;
-  const bulletRef = useRef();
+function SingleBullet({position}){
+    const SPEED = 100;
+    const singleBulletRef = useRef();
 
-  useFrame((state,delta)=>{
+    useFrame((_,delta)=>{
+        if(singleBulletRef.current){
+            singleBulletRef.current.position.z -= delta*SPEED;
 
-    if(bulletRef.current){
-        bulletRef.current.position.z -= delta*SPEED;
-    }
-  })
+            if(singleBulletRef.current.position.z <= 180){
+                
+            }
+        }
+    })
 
+    return(
+        <mesh ref={singleBulletRef} position={[...position]}> 
+            <sphereGeometry args={[0.3,15,15]}/>
+            <meshStandardMaterial color="red"/>
+        </mesh>
+    )
+}
+
+function Bullets({bullets}) {
   return (
-    <mesh ref={bulletRef} position={[x,y,z-5]}>
-        <sphereGeometry args={[0.3,15,15]}/>
-        <meshStandardMaterial color="red"/>
-    </mesh>
+   <>
+    {bullets.map((each)=>{
+       return <SingleBullet key={each.id} position={each.position} />
+    })}
+   </>
   )
 }
 

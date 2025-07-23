@@ -7,9 +7,9 @@ export default function Player(){
   const playerPos = usePlayerStore((state)=>{ return state.playerPosition})
   const setPlayerPos = usePlayerStore((state)=>{ return state.setPlayerPosition})
 
-  const [isShooting,setIsShooting] = useState(false)
+  const [bullets, setBullets] = useState([]);
 
-  // left to right movement
+  // player movement
   useEffect(()=>{
 
     const handleKeyPress= (e)=>{
@@ -35,24 +35,16 @@ export default function Player(){
 
   },[playerPos])
 
-  // mouse left click
+  // shooting bullets
   useEffect(()=>{
     function handleMouseDown(){
-      setIsShooting(true);
-      console.log("shooting")
-    }
-
-    function handleMouseUp(){
-      setIsShooting(false);
-      console.log("stoped")
+      setBullets((prev)=>[...prev,{id:Date.now()+Math.random(), position: [...playerPos]}])
     }
 
     window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp)
 
     return()=>{
       window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseDown);
     }
 
   },[playerPos])
@@ -63,9 +55,7 @@ export default function Player(){
         <boxGeometry args={[2, 2, 2]} />
         <meshStandardMaterial color="white" />
       </mesh>
-      {isShooting && (
-        <Bullets />
-      )}
-      </>
+        <Bullets bullets={bullets} />
+      </> 
   )
 }
