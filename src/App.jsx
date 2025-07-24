@@ -2,6 +2,9 @@ import {Canvas} from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import Player from './components/Player';
 import Ground from './components/Ground';
+import { Debug, Physics} from '@react-three/cannon'
+import HelpPanel from './components/HelpPanel';
+import EnemyPanel from './components/EnemyPanel';
 
 function App() {
 
@@ -18,8 +21,14 @@ function App() {
         <OrbitControls />
 
         {/*Scene*/}
-        <Player/>
-        <Ground />
+       <Physics>
+         <Debug color="red" scale={1.1}>
+          <Ground />
+          <Player/>
+          <HelpPanel />
+          <EnemyPanel />
+         </Debug>
+       </Physics>
 
         {/*lights*/}
         <ambientLight intensity={0.4} color="white"/>

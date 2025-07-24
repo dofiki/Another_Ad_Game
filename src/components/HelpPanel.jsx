@@ -2,26 +2,46 @@ import { useRef} from "react"
 import degToRad from "../utils/degToRad"
 import { useFrame } from "@react-three/fiber"
 import { Text } from "@react-three/drei";
+import { useBox } from "@react-three/cannon";
+
 
 function HelpPanel() {
     
   const SPEED = 25;
-  const helpRef = useRef()
-  const helpNameRef = useRef()
-  const helpStatusRef = useRef()
 
-  useFrame((state, delta) => {
-    if (helpRef.current && helpNameRef.current) {
-      helpRef.current.position.y -= delta * SPEED;
-      helpNameRef.current.position.y -= delta * SPEED;
-      helpStatusRef.current.position.y -= delta * SPEED;
+  const [helpRef, helpApi ] = useBox(()=>({
+    type:"Kinematic",
+    position:[-10, 10, -80],
+    args: [20, 20, 5],
+    rotation: [degToRad(0), degToRad(0), degToRad(180)],
+    userData: { id: "help-panel" },
+    
+  })) 
+
+  //const helpNameRef = useRef()
+  //const helpStatusRef = useRef()
+
+  useFrame((_, delta) => {
+    if (helpRef.current) {
+
+      const pos = helpRef.current.position
+      const z = pos.z + delta * SPEED
+
+
+      helpApi.position.set(pos.x,pos.y,z) // physics body
+      helpRef.current.position.set(pos.x,pos.y,z) // mesh
+
+     // helpNameRef.current.position.y -= delta * SPEED;
+    //helpStatusRef.current.position.y -= delta * SPEED;
     }
 
     // threshold
-    if(helpRef.current.position.y <= -180){
-        helpRef.current.position.y = -10;
-        helpNameRef.current.position.y = -10;
-        helpStatusRef.current.position.y = -10;
+    if(helpRef.current.position.z >= 50){
+        helpApi.position.set(-10, 10, -80) // resetting physics body
+        helpRef.current.position.set(-10, 10, -80) // resetting mesh 
+
+       // helpNameRef.current.position.y = -10;
+       // helpStatusRef.current.position.y = -10;
     }
 
   })
@@ -30,10 +50,9 @@ function HelpPanel() {
     <>
     <mesh
       ref={helpRef}
-      position={[-10, -10, 0]}
-      rotation={[degToRad(90), degToRad(0), degToRad(180)]}
     >
-      <planeGeometry args={[20, 20]} />
+  
+      <boxGeometry args={[20, 20, 1]} />
       
       <meshStandardMaterial
         color="blue"
@@ -43,8 +62,11 @@ function HelpPanel() {
         emissiveIntensity={0.7}
         side={2}
       />
+
     </mesh>
-      <Text
+    {
+      /*
+        <Text
         ref={helpNameRef}
         position={[-10, -10, 11.5]} 
         rotation={[degToRad(90),degToRad(0),degToRad(0)]}
@@ -66,7 +88,9 @@ function HelpPanel() {
         anchorY="middle"
       >
         15
-      </Text>
+   </Text>
+      */
+    }
     </>
   )
 }

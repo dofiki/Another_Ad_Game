@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import usePlayerStore from '../store/playerStore'; 
 import Bullets from './Bullets';
 
+
 export default function Player(){
 
   const playerPos = usePlayerStore((state)=>{ return state.playerPosition})
