@@ -10,8 +10,8 @@ export default function GrassRight(){
     texture.repeat.set(2,4)
 
     return (
-    <mesh rotation={[-Math.PI / 2, 0, 0] } position={[80,0,-100]}>
-          <planeGeometry args={[120, 300]} />
+    <mesh rotation={[-Math.PI / 2, 0, 0] } position={[120,0,-100]}>
+          <planeGeometry args={[200, 300]} />
           <meshStandardMaterial map={texture} />
      </mesh>
     )

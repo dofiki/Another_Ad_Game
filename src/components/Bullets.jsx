@@ -1,9 +1,26 @@
 import { useSphere } from "@react-three/cannon";
-import { useFrame } from "@react-three/fiber";
-import { useEffect } from "react";
+import usePlayerStore from "../store/playerStore";
 
-function SingleBullet({position}){
-    const SPEED = 100;
+function SingleBullet({ position }) {
+  const setHelpPanelStats = usePlayerStore((state) => state.setHelpPanelStats);
+  const setTotalScore = usePlayerStore((state) => state.setTotalScore); // subscribed 
+
+function handleStats() {
+  const current = usePlayerStore.getState().helpPanelStats;
+
+  if (current <= 0) return;
+
+  const newStat = current - 1;
+
+  if (newStat === 0) {
+    const currentScore = usePlayerStore.getState().totalScore; // not subscribed
+    setTotalScore(currentScore + 150);
+  }
+
+  setHelpPanelStats(newStat);
+}
+
+
 
     const [singleBulletRef, SingleBulletApi]= useSphere(()=>({
         mass: 1,
@@ -12,9 +29,9 @@ function SingleBullet({position}){
         velocity:[0,0,-300],
         onCollide: (e) => {
             if(e.body?.userData?.id === "help-panel"){
-                console.log("hit help-panel");
+                handleStats();
             }else if(e.body?.userData?.id === "enemy-panel"){
-                console.log("hit enempy-panel")
+                console.log("hit enempy-panel") 
             }
 }
 }));

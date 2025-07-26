@@ -9,7 +9,7 @@ function EnemyPanel() {
 
   const [enemeyRef, enemeyRefApi] = useBox(()=>({
     type:"kinematic",
-    position:[10, 2, -120],
+    position:[10, 2, -200],
     rotation:[degToRad(0), degToRad(0), degToRad(180)],
     args: [20,20,5],
     userData: { id: "enemy-panel" },
@@ -26,8 +26,8 @@ function EnemyPanel() {
     }
     // threshold
     if(enemeyRef.current.position.z >= 50){
-        enemeyRefApi.position.set(10, 10, -120) // resetting physics body
-        enemeyRef.current.position.set(10, 10, -120) // resetting mesh
+        enemeyRefApi.position.set(10, 2, -200) // resetting physics body
+        enemeyRef.current.position.set(10, 2, -200) // resetting mesh
     }
   })
 
@@ -41,9 +41,9 @@ function EnemyPanel() {
         <meshStandardMaterial
           color="red"
           transparent={true}
-          opacity={0.1}
+          opacity={0.2}
           emissive="red"
-          emissiveIntensity={0.7}
+          emissiveIntensity={1}
           side={2}
         />
       </mesh>
