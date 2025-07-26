@@ -52,9 +52,9 @@ export default function Player(){
 
   return(
       <>
-      <mesh position={playerPos}>
+      <mesh castShadow  position={playerPos}>
         <boxGeometry args={[2, 2, 2]} />
-        <meshStandardMaterial color="white" />
+        <meshStandardMaterial color="white" wireframe />
       </mesh>
         <Bullets bullets={bullets} />
       </> 

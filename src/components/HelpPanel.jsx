@@ -11,7 +11,7 @@ function HelpPanel() {
 
   const [helpRef, helpApi ] = useBox(()=>({
     type:"Kinematic",
-    position:[-10, 10, -80],
+    position:[-10, 2, -80],
     args: [20, 20, 5],
     rotation: [degToRad(0), degToRad(0), degToRad(180)],
     userData: { id: "help-panel" },
@@ -55,10 +55,10 @@ function HelpPanel() {
       <boxGeometry args={[20, 20, 1]} />
       
       <meshStandardMaterial
-        color="blue"
+        color="green"
         transparent={true}
-        opacity={0.4}
-        emissive="blue"
+        opacity={0.1}
+        emissive="green"
         emissiveIntensity={0.7}
         side={2}
       />

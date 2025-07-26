@@ -1,43 +1,53 @@
-import {Canvas} from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import Player from './components/Player';
 import Ground from './components/Ground';
-import { Debug, Physics} from '@react-three/cannon'
+import { Physics } from '@react-three/cannon';
 import HelpPanel from './components/HelpPanel';
 import EnemyPanel from './components/EnemyPanel';
+import GrassLeft from './components/sideway/GrassLeft';
+import GrassRight from './components/sideway/GrassRight';
 
 function App() {
-
   return (
     <div id="canvas-container">
-      <Canvas camera={{ position: [0, 30, 40], fov: 50}} >
-        
+      <Canvas shadows camera={{ position: [0, 20, 28], fov: 80 }}>
         <color attach="background" args={['black']} />
+        <fog attach="fog" args={['black', 30, 200]} />
 
-        {/*helpers*/}
+        {/* helpers */}
         <GizmoHelper alignment='bottom-right' margin={[80, 80]}>
           <GizmoViewport />
         </GizmoHelper>
         <OrbitControls />
 
-        {/*Scene*/}
-       <Physics>
-         <Debug color="red" scale={1.1}>
+        {/* lights */}
+        <ambientLight intensity={0.5} color="white" /> {/* Very low ambient */}
+          <spotLight
+          position={[20, 37, -25]} // Positioned above the ground at z=-100
+          angle={Math.PI / 5} // 30 degree cone
+          intensity={120} // Strong intensity
+          distance={80} // Enough to reach the ground
+          decay={1}
+          penumbra={0.5}
+          castShadow
+          color="white"
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
+
+        {/* scene */}
+        <Physics>
           <Ground />
-          <Player/>
+          <Player />
           <HelpPanel />
           <EnemyPanel />
-         </Debug>
-       </Physics>
-
-        {/*lights*/}
-        <ambientLight intensity={0.4} color="white"/>
-        <directionalLight position={[2, 5, 1]} intensity={0.5} color="white" />
-
+          <GrassLeft />
+          <GrassRight />
+        </Physics>
       </Canvas>
     </div>
-        
-  )
+  );
 }
 
-export default App
+export default App;

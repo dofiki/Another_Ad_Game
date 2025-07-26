@@ -9,7 +9,7 @@ function EnemyPanel() {
 
   const [enemeyRef, enemeyRefApi] = useBox(()=>({
     type:"kinematic",
-    position:[10, 10, -120],
+    position:[10, 2, -120],
     rotation:[degToRad(0), degToRad(0), degToRad(180)],
     args: [20,20,5],
     userData: { id: "enemy-panel" },
@@ -41,7 +41,7 @@ function EnemyPanel() {
         <meshStandardMaterial
           color="red"
           transparent={true}
-          opacity={0.4}
+          opacity={0.1}
           emissive="red"
           emissiveIntensity={0.7}
           side={2}
