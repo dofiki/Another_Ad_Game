@@ -5,7 +5,6 @@ import { Text } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 import usePlayerStore from "../store/playerStore";
 
-
 function HelpPanel() {
     
   const helpPanelStats = usePlayerStore((state)=>{return state.helpPanelStats})
@@ -22,9 +21,6 @@ function HelpPanel() {
     
   })) 
 
-  //const helpNameRef = useRef()
-  //const helpStatusRef = useRef()
-
   useFrame((_, delta) => {
     if (helpRef.current) {
 
@@ -34,27 +30,20 @@ function HelpPanel() {
 
       helpApi.position.set(pos.x,pos.y,z) // physics body
       helpRef.current.position.set(pos.x,pos.y,z) // mesh
-     // helpNameRef.current.position.y -= delta * SPEED;
-    //helpStatusRef.current.position.y -= delta * SPEED;
     }
 
     // threshold
     if(helpRef.current.position.z >= 50){
         helpApi.position.set(-10, 2, -100) // resetting physics body
         helpRef.current.position.set(-10, 2, -100) // resetting mesh 
-        setHelpPanelStats(5)
-
-       // helpNameRef.current.position.y = -10;
-       // helpStatusRef.current.position.y = -10;
+        setHelpPanelStats(12)
     }
 
   })
 
   return (
     <>
-    <mesh
-      ref={helpRef}
-    >
+    <mesh ref={helpRef}>
   
       <boxGeometry args={[20, 20, 1]} />
       
@@ -76,48 +65,21 @@ function HelpPanel() {
       anchorY={-5}
     >
       {helpPanelStats > 0 ? helpPanelStats : "-"}
- </Text>
+    </Text>
 
       
      <Text
-      rotation={[degToRad(0), degToRad(0), degToRad(180)]}
-      fontSize={2}
-      color="green"
-      anchorX={5}
-      anchorY={-15}>
+        rotation={[degToRad(0), degToRad(0), degToRad(180)]}
+        fontSize={2}
+        color="green"
+        anchorX={5}
+        anchorY={-15}>
 
-      {helpPanelStats === 0 ? " ate +150 pts": " +150 pts"}
-</Text>
-
+        {helpPanelStats === 0 ? " ate +150 pts": " +150 pts"}
+    </Text>
 
     </mesh>
-    {
-      /*
-        <Text
-        ref={helpNameRef}
-        position={[-10, -10, 11.5]} 
-        rotation={[degToRad(90),degToRad(0),degToRad(0)]}
-        fontSize={3}
-        color="Blue"
-        anchorX="center"
-        anchorY="middle"
-      >
-        +5
-      </Text>
-      
-      <Text
-        ref={helpStatusRef}
-        position={[-10, -11, 5]} 
-        rotation={[degToRad(90),degToRad(0),degToRad(0)]}
-        fontSize={3}
-        color="Blue"
-        anchorX="center"
-        anchorY="middle"
-      >
-        15
-   </Text>
-      */
-    }
+  
     </>
   )
 }

@@ -5,7 +5,7 @@ function SingleBullet({ position }) {
   const setHelpPanelStats = usePlayerStore((state) => state.setHelpPanelStats);
   const setTotalScore = usePlayerStore((state) => state.setTotalScore); // subscribed 
 
-function handleStats() {
+function handleHelpPanelStats() {
   const current = usePlayerStore.getState().helpPanelStats;
 
   if (current <= 0) return;
@@ -18,20 +18,31 @@ function handleStats() {
   }
 
   setHelpPanelStats(newStat);
+ 
 }
 
+function handleEnemyPanelStats(){
+ const currentScore = usePlayerStore.getState().totalScore;
+  if(currentScore>0){
+    setTotalScore(currentScore - 150);
+  }
+}
 
+function handleNightGuard(){
+}
 
-    const [singleBulletRef, SingleBulletApi]= useSphere(()=>({
+const [singleBulletRef, SingleBulletApi]= useSphere(()=>({
         mass: 1,
         position,
         args:[0.2],
         velocity:[0,0,-300],
         onCollide: (e) => {
             if(e.body?.userData?.id === "help-panel"){
-                handleStats();
+                handleHelpPanelStats();
             }else if(e.body?.userData?.id === "enemy-panel"){
-                console.log("hit enempy-panel") 
+                handleEnemyPanelStats(); 
+            }else if(e.body?.userData?.id === "night-guard"){
+                handleNightGuard();
             }
 }
 }));

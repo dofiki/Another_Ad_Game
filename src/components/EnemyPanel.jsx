@@ -2,6 +2,7 @@ import { useRef } from "react";
 import degToRad from "../utils/degToRad";
 import { useFrame } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";
+import { Text } from "@react-three/drei";
 
 function EnemyPanel() {
   
@@ -44,8 +45,18 @@ function EnemyPanel() {
           opacity={0.2}
           emissive="red"
           emissiveIntensity={1}
-          side={2}
-        />
+          side={2}/>
+
+        <Text 
+          position={[0, 0, 0.6]} 
+          rotation={[degToRad(0), degToRad(0), degToRad(180)]}
+          fontSize={2}
+          color="red"
+          anchorX={4}
+          anchorY={-15}>
+            -150 pts
+      </Text>
+
       </mesh>
   )
 }
