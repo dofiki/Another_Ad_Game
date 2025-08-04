@@ -8,7 +8,10 @@ const usePlayerStore = create((set)=> ({
     setHelpPanelStats: (newStats)=> set({helpPanelStats:newStats}),
 
     totalScore:0,
-    setTotalScore: (newScore)=> set({totalScore:newScore})
+    setTotalScore: (newScore)=> set({totalScore:newScore}),
+
+    nightGuardStat:5,
+    setNightGuardStat: (newNgStats)=> set({nightGuardStat:newNgStats})
 }))
 
 export default usePlayerStore;

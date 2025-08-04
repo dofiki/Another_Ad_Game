@@ -6,7 +6,7 @@ import { Text } from "@react-three/drei";
 
 function EnemyPanel() {
   
-  const SPEED = 20 ;
+  const SPEED = 25 ;
 
   const [enemeyRef, enemeyRefApi] = useBox(()=>({
     type:"kinematic",
